@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="DSVV Digital Research Shelf — Explore research, journals, and scholarly publications from Dev Sanskriti Vishwavidyalaya.">
+  <title>DSVV Digital Research Shelf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/config.js"></script>
+</head>
+<body>
+
+  <!-- Loading Screen -->
+  <div id="loading" class="loading" aria-live="polite">
+    <div class="loading-spinner" aria-hidden="true"></div>
+    <p class="loading-text">Loading research shelf…</p>
+  </div>
+
+  <!-- Error Screen -->
+  <div id="error-msg" class="error-msg" hidden aria-live="assertive"></div>
+
+  <!-- Main App Shell -->
+  <div class="page">
+
+    <!-- Header / Navbar -->
+    <header class="header">
+      <div class="header-left">
+        <a href="/" class="header-brand-link" id="brand-link" aria-label="Go to shelf home">
+          <img src="/logo.png" alt="Dev Sanskriti Vishwavidyalaya Logo" class="header-logo">
+        </a>
+        <div class="header-text">
+          <h1 class="header-name" id="header-name">DSVV DIGITAL RESEARCH SHELF</h1>
+          <p class="header-subtitle" id="header-subtitle">Explore Research • Journals • Scholarly Publications</p>
+        </div>
+      </div>
+      
+      <!-- Year Filters (Visible in Shelf View) -->
+      <nav class="chips-area" id="chips" aria-label="Filter journal volumes by year"></nav>
+    </header>
+
+    <!-- VIEW 1: Main Bookshelf View -->
+    <section id="shelf-view" class="view-section" aria-label="Journals Shelf View">
+      <main class="shelf-container" aria-label="Digital Research Shelf">
+        <div class="shelf-header-info">
+          <span class="shelf-tag">UNIVERSITY ARCHIVES</span>
+          <span class="shelf-count-text" id="shelf-stats">Loading volumes…</span>
+        </div>
+        <div class="shelf-wrapper">
+          <div id="shelf" role="list" aria-label="Journal volumes on the shelf"></div>
+        </div>
+        <div class="shelf-plank" id="shelf-plank" aria-hidden="true"></div>
+      </main>
+    </section>
+
+    <!-- VIEW 2: Volume Page (/volume/:volId) -->
+    <section id="volume-view" class="view-section volume-view" hidden aria-label="Volume Articles View">
+      <div class="volume-container">
+        
+        <!-- Breadcrumb / Back Navigation -->
+        <nav class="volume-nav">
+          <button id="vol-back-btn" class="back-btn" aria-label="Back to research shelf">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Back to Research Shelf</span>
+          </button>
+        </nav>
+
+        <!-- Volume Hero Banner -->
+        <div class="volume-hero" id="volume-hero">
+          <div class="volume-hero-left">
+            <div class="volume-badge" id="vol-badge">Volume</div>
+            <h2 class="volume-title" id="vol-title">Volume Details</h2>
+            <p class="volume-subheading" id="vol-subheading"></p>
+            <p class="volume-desc" id="vol-desc"></p>
+            <div class="volume-meta-pills" id="vol-meta-pills"></div>
+          </div>
+          <div class="volume-hero-right">
+            <div class="volume-cover-art" id="vol-cover-art">
+              <div class="cover-gold-border"></div>
+              <div class="cover-dsvv-insignia">DSVV</div>
+              <div class="cover-vol-title" id="cover-vol-title">Vol. 28</div>
+              <div class="cover-year" id="cover-year">2026</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Articles Grouped Section -->
+        <div class="articles-section">
+          <div class="articles-header">
+            <h3 class="articles-section-title">Articles in this Volume</h3>
+            <span class="articles-count-badge" id="articles-count-badge">0 Articles</span>
+          </div>
+          <div id="volume-articles-container" class="volume-articles-list"></div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Open Volume Modal View (from clicking spine on shelf) -->
+  <div id="open-view" hidden role="dialog" aria-modal="true" aria-label="Journal volume preview" tabindex="-1"></div>
+
+  <!-- Live Sync Status -->
+  <div class="sync-status" id="sync-status" aria-live="polite"></div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- Screen Reader Accessible List -->
+  <div class="sr-only">
+    <h2>All Journal Volumes</h2>
+    <ul id="sr-book-list"></ul>
+  </div>
+
+  <!-- Accessibility Live Region -->
+  <div id="live-region" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Main Module -->
+  <script type="module" src="/src/app.js"></script>
+
+</body>
+</html>
