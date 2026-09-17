@@ -253,25 +253,37 @@ html, body {
   overflow-y: hidden;
   padding: 2.5rem 2rem 0;
   scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.3) transparent;
+  scrollbar-color: rgba(212, 175, 55, 0.4) rgba(0, 0, 0, 0.3);
+  scroll-behavior: smooth;
 }
 
 .shelf-wrapper::-webkit-scrollbar {
-  height: 6px;
+  height: 8px;
+}
+
+.shelf-wrapper::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
 }
 
 .shelf-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.3);
-  border-radius: 3px;
+  background: rgba(212, 175, 55, 0.4);
+  border-radius: 4px;
+}
+
+.shelf-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.7);
 }
 
 #shelf {
   display: flex;
   align-items: flex-end;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 16px;
   min-height: 380px;
   padding-bottom: 0px;
+  width: max-content;
+  min-width: 100%;
 }
 
 /* Deep 3D Wooden Shelf Plank */

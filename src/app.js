@@ -23,6 +23,7 @@ const FILTER_YEARS = ["ALL", "2026", "2025", "2024", "2023", "ARCHIVE"];
 const $ = (s) => document.querySelector(s);
 const shelfView         = $("#shelf-view");
 const volumeView        = $("#volume-view");
+const shelfWrapper     = $(".shelf-wrapper");
 const shelf             = $("#shelf");
 const shelfStats        = $("#shelf-stats");
 const chipsWrap         = $("#chips");
@@ -78,6 +79,16 @@ export async function init() {
     playClick();
     navigateTo("/");
   });
+
+  // Enable horizontal mouse wheel scrolling across the bookshelf
+  if (shelfWrapper) {
+    shelfWrapper.addEventListener("wheel", (e) => {
+      if (e.deltaY !== 0) {
+        e.preventDefault();
+        shelfWrapper.scrollLeft += e.deltaY;
+      }
+    }, { passive: false });
+  }
 
   window.addEventListener("popstate", () => {
     handleRoute();
@@ -212,6 +223,7 @@ function hashStr(s) {
 function buildShelf() {
   shelf.innerHTML = "";
   shelfStats.textContent = `${journals.length} Volumes Available`;
+  if (shelfWrapper) shelfWrapper.scrollLeft = 0;
 
   journals.forEach((j, i) => {
     const h = hashStr(j.volume);

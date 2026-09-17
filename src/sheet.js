@@ -149,12 +149,13 @@ export async function fetchSheetData(config) {
   let paletteIdx = 0;
 
   for (const row of journalsParsed.rows) {
-    const volume = (row[jCols.volume] || "").trim();
-    if (!volume) continue;
+    const rawVolume = (row[jCols.volume] || "").trim();
+    if (!rawVolume) continue;
 
-    const slug = cleanVolumeSlug(volume);
+    const volume = /^vol/i.test(rawVolume) ? rawVolume : `Vol. ${rawVolume}`;
+    const slug = cleanVolumeSlug(rawVolume);
     const matchedArticles = articles.filter(a =>
-      (a.volume && volume && a.volume.toLowerCase() === volume.toLowerCase()) ||
+      (a.volume && rawVolume && (a.volume.toLowerCase() === rawVolume.toLowerCase() || a.volume.toLowerCase() === volume.toLowerCase())) ||
       (a.volumeSlug && slug && a.volumeSlug === slug)
     );
 
