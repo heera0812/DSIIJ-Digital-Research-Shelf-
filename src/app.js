@@ -53,8 +53,8 @@ const articlesBadge     = $("#articles-count-badge");
 
 /* ───────────── Initialization ───────────── */
 export async function init() {
-  if (CONFIG.name) headerName.textContent = CONFIG.name;
-  if (CONFIG.subtitle) headerSub.textContent = CONFIG.subtitle;
+  if (CONFIG.name && headerName) headerName.textContent = CONFIG.name;
+  if (CONFIG.subtitle && headerSub) headerSub.textContent = CONFIG.subtitle;
   document.title = CONFIG.name || "DSVV Digital Research Shelf";
 
   if (CONFIG.background) {
