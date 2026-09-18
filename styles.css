@@ -249,31 +249,83 @@ html, body {
   padding-top: 1rem;
 }
 
+.shelf-carousel-container {
+  position: relative;
+  width: 100%;
+}
+
 .shelf-wrapper {
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 2.5rem 2rem 0;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(212, 175, 55, 0.4) rgba(0, 0, 0, 0.3);
+  padding: 2.5rem 1.5rem 0;
   scroll-behavior: smooth;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE / Edge */
 }
 
 .shelf-wrapper::-webkit-scrollbar {
-  height: 8px;
+  display: none;                /* Chrome / Safari / Opera */
 }
 
-.shelf-wrapper::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
+/* ────────── Shelf Left/Right Little Arrows ────────── */
+.shelf-arrow {
+  position: absolute;
+  top: 52%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  color: var(--gold-foil);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.6),
+    0 0 10px rgba(212, 175, 55, 0.15);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
-.shelf-wrapper::-webkit-scrollbar-thumb {
-  background: rgba(212, 175, 55, 0.4);
-  border-radius: 4px;
+.shelf-arrow:hover:not(:disabled) {
+  background: rgba(22, 27, 34, 0.98);
+  border-color: var(--gold-accent);
+  color: #ffffff;
+  box-shadow: 
+    0 0 18px var(--gold-glow),
+    0 8px 24px rgba(0, 0, 0, 0.8);
+  transform: translateY(-50%) scale(1.1);
 }
 
-.shelf-wrapper::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.7);
+.shelf-arrow:active:not(:disabled) {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.shelf-arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.8);
+}
+
+.shelf-arrow-left {
+  left: -18px;
+}
+
+.shelf-arrow-right {
+  right: -18px;
+}
+
+@media (max-width: 900px) {
+  .shelf-arrow-left {
+    left: 4px;
+  }
+  .shelf-arrow-right {
+    right: 4px;
+  }
 }
 
 #shelf {
