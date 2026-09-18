@@ -5,7 +5,6 @@
  */
 
 import { fetchSheetData, dataFingerprint, cleanVolumeSlug } from "./sheet.js";
-import { initAudio, playClick, playOpen, playClose, playNav } from "./audio.js";
 
 /* ───────────── State ───────────── */
 let journals = [];
@@ -75,33 +74,27 @@ export async function init() {
     document.documentElement.style.setProperty("--shelf-tone", CONFIG.shelfTone);
   }
 
-  // Audio start on first interaction
-  document.addEventListener("click", () => initAudio(), { once: true });
 
   // Navigation handlers
   volBackBtn.addEventListener("click", (e) => {
     e.preventDefault();
-    playClick();
     navigateTo("/");
   });
 
   brandLink.addEventListener("click", (e) => {
     e.preventDefault();
-    playClick();
     navigateTo("/");
   });
 
   // Shelf Left & Right Arrow Buttons
   if (arrowLeft && shelfWrapper) {
     arrowLeft.addEventListener("click", () => {
-      playNav();
       shelfWrapper.scrollBy({ left: -380, behavior: "smooth" });
     });
   }
 
   if (arrowRight && shelfWrapper) {
     arrowRight.addEventListener("click", () => {
-      playNav();
       shelfWrapper.scrollBy({ left: 380, behavior: "smooth" });
     });
   }
@@ -307,7 +300,6 @@ function buildShelf() {
     spine.appendChild(footerMeta);
 
     spine.addEventListener("click", () => {
-      playClick();
       openJournalModal(i);
     });
 
@@ -330,7 +322,6 @@ function buildFilterChips() {
     if (label === activeFilter) chip.classList.add("active");
 
     chip.addEventListener("click", () => {
-      playClick();
       activeFilter = label;
       applyFilter();
     });
@@ -514,7 +505,6 @@ function renderGroupedArticles(volArticles) {
 function openJournalModal(index) {
   openJournalIndex = index;
   const journal = journals[index];
-  playOpen();
 
   openView.hidden = false;
   document.body.classList.add("modal-open");
@@ -566,24 +556,20 @@ function renderModalView(journal, index) {
   openView.querySelector("#ov-close-btn").addEventListener("click", () => closeModal(true));
   
   openView.querySelector("#ov-explore-btn").addEventListener("click", () => {
-    playClick();
     closeModal(false);
     navigateTo(`/volume/${journal.slug}`);
   });
 
   openView.querySelector("#ov-prev")?.addEventListener("click", () => {
-    playNav();
     navigateModal(-1);
   });
 
   openView.querySelector("#ov-next")?.addEventListener("click", () => {
-    playNav();
     navigateModal(1);
   });
 }
 
-function closeModal(playSound = true) {
-  if (playSound) playClose();
+function closeModal() {
   openView.hidden = true;
   document.body.classList.remove("modal-open");
   openJournalIndex = -1;
@@ -600,14 +586,12 @@ function navigateModal(dir) {
 function onKeyDown(e) {
   if (openJournalIndex >= 0) {
     if (e.key === "Escape") {
-      closeModal(true);
+      closeModal();
       e.preventDefault();
     } else if (e.key === "ArrowLeft") {
-      playNav();
       navigateModal(-1);
       e.preventDefault();
     } else if (e.key === "ArrowRight") {
-      playNav();
       navigateModal(1);
       e.preventDefault();
     }
