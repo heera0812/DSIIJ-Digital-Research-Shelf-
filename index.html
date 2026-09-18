@@ -44,8 +44,20 @@
           <span class="shelf-tag">UNIVERSITY ARCHIVES</span>
           <span class="shelf-count-text" id="shelf-stats">Loading volumes…</span>
         </div>
-        <div class="shelf-wrapper">
-          <div id="shelf" role="list" aria-label="Journal volumes on the shelf"></div>
+        <div class="shelf-carousel-container">
+          <button class="shelf-arrow shelf-arrow-left" id="shelf-arrow-left" aria-label="Scroll shelf left" disabled>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <div class="shelf-wrapper">
+            <div id="shelf" role="list" aria-label="Journal volumes on the shelf"></div>
+          </div>
+          <button class="shelf-arrow shelf-arrow-right" id="shelf-arrow-right" aria-label="Scroll shelf right">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
         </div>
         <div class="shelf-plank" id="shelf-plank" aria-hidden="true"></div>
       </main>

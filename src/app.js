@@ -25,6 +25,8 @@ const shelfView         = $("#shelf-view");
 const volumeView        = $("#volume-view");
 const shelfWrapper     = $(".shelf-wrapper");
 const shelf             = $("#shelf");
+const arrowLeft         = $("#shelf-arrow-left");
+const arrowRight        = $("#shelf-arrow-right");
 const shelfStats        = $("#shelf-stats");
 const chipsWrap         = $("#chips");
 const openView          = $("#open-view");
@@ -50,6 +52,15 @@ const coverVolTitle     = $("#cover-vol-title");
 const coverYear         = $("#cover-year");
 const articlesContainer = $("#volume-articles-container");
 const articlesBadge     = $("#articles-count-badge");
+
+/* ───────────── Arrow Navigation ───────────── */
+function updateArrowVisibility() {
+  if (!shelfWrapper || !arrowLeft || !arrowRight) return;
+  const sl = Math.round(shelfWrapper.scrollLeft);
+  const maxScroll = shelfWrapper.scrollWidth - shelfWrapper.clientWidth;
+  arrowLeft.disabled = sl <= 8;
+  arrowRight.disabled = sl >= maxScroll - 8 || maxScroll <= 0;
+}
 
 /* ───────────── Initialization ───────────── */
 export async function init() {
@@ -80,6 +91,21 @@ export async function init() {
     navigateTo("/");
   });
 
+  // Shelf Left & Right Arrow Buttons
+  if (arrowLeft && shelfWrapper) {
+    arrowLeft.addEventListener("click", () => {
+      playNav();
+      shelfWrapper.scrollBy({ left: -380, behavior: "smooth" });
+    });
+  }
+
+  if (arrowRight && shelfWrapper) {
+    arrowRight.addEventListener("click", () => {
+      playNav();
+      shelfWrapper.scrollBy({ left: 380, behavior: "smooth" });
+    });
+  }
+
   // Enable horizontal mouse wheel scrolling across the bookshelf
   if (shelfWrapper) {
     shelfWrapper.addEventListener("wheel", (e) => {
@@ -88,6 +114,9 @@ export async function init() {
         shelfWrapper.scrollLeft += e.deltaY;
       }
     }, { passive: false });
+
+    shelfWrapper.addEventListener("scroll", updateArrowVisibility, { passive: true });
+    window.addEventListener("resize", updateArrowVisibility, { passive: true });
   }
 
   window.addEventListener("popstate", () => {
@@ -284,6 +313,9 @@ function buildShelf() {
 
     shelf.appendChild(spine);
   });
+
+  updateArrowVisibility();
+  setTimeout(updateArrowVisibility, 150);
 }
 
 /* ───────────── Year Filter Chips ───────────── */
