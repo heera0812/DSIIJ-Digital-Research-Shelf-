@@ -615,69 +615,116 @@ html, body {
   color: #fff;
 }
 
-/* 3D Journal Cover Card inside Hero */
+/* 3D Journal Cover Card inside Hero & Modal */
 .volume-hero-right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+.volume-cover-wrapper {
+  perspective: 1200px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.volume-cover-art {
-  width: 190px;
-  height: 260px;
-  background: #102a43;
-  border-radius: 4px 10px 10px 4px;
-  padding: 1.5rem 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  text-align: center;
-  box-shadow: 
-    -6px 0 12px rgba(0,0,0,0.5),
-    10px 15px 30px rgba(0,0,0,0.6),
-    inset 6px 0 10px rgba(255,255,255,0.15);
-  border: 1px solid rgba(223, 186, 115, 0.35);
+.volume-cover-art,
+.ov-cover {
+  width: 216px;
+  height: 306px;
+  background: #081a2f;
+  border-radius: 3px 10px 10px 3px;
   position: relative;
-  transform: perspective(600px) rotateY(-8deg);
-  transition: transform 0.4s ease;
-}
-
-.volume-cover-art:hover {
-  transform: perspective(600px) rotateY(0deg) scale(1.03);
-}
-
-.cover-gold-border {
-  position: absolute;
-  inset: 10px;
+  overflow: hidden;
+  box-shadow: 
+    -7px 0 16px rgba(0, 0, 0, 0.7),
+    14px 22px 42px rgba(0, 0, 0, 0.8),
+    inset 3px 0 6px rgba(255, 255, 255, 0.16),
+    inset -2px 0 5px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(223, 186, 115, 0.4);
+  transform: perspective(1000px) rotateY(-11deg) rotateX(2deg);
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.45s ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.volume-cover-art:hover,
+.ov-cover:hover {
+  transform: perspective(1000px) rotateY(-1deg) rotateX(0deg) translateY(-5px) scale(1.03);
+  box-shadow: 
+    -4px 4px 20px rgba(0, 0, 0, 0.75),
+    18px 28px 48px rgba(0, 0, 0, 0.85),
+    0 0 28px var(--gold-glow);
+}
+
+.book-cover-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: inherit;
   pointer-events: none;
 }
 
-.cover-dsvv-insignia {
+.book-spine-crease {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.45) 0%,
+    rgba(0, 0, 0, 0.14) 28%,
+    rgba(255, 255, 255, 0.22) 52%,
+    rgba(0, 0, 0, 0.22) 76%,
+    transparent 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+.book-gloss-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.05) 32%,
+    transparent 55%
+  );
+  border: 1px solid rgba(223, 186, 115, 0.3);
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.cover-volume-ribbon {
+  position: absolute;
+  top: 0;
+  right: 16px;
+  background: linear-gradient(180deg, #dfba73 0%, #b88628 100%);
+  color: #0b1522;
   font-family: var(--font-serif);
-  font-size: 0.85rem;
+  font-size: 0.74rem;
   font-weight: 800;
-  letter-spacing: 0.25em;
-  color: var(--gold-foil);
-  margin-top: 10px;
-}
-
-.cover-vol-title {
-  font-family: var(--font-serif);
-  font-size: 1.35rem;
-  font-weight: 700;
-  color: #fff;
-  letter-spacing: 0.05em;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
-}
-
-.cover-year {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--gold-foil);
   letter-spacing: 0.1em;
-  margin-bottom: 8px;
+  text-transform: uppercase;
+  padding: 6px 10px 9px;
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.65);
+  z-index: 4;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 6px), 50% 100%, 0 calc(100% - 6px));
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: transform 0.25s ease;
+}
+
+.volume-cover-art:hover .cover-volume-ribbon,
+.ov-cover:hover .cover-volume-ribbon {
+  transform: translateY(2px);
 }
 
 /* ────────── Articles Section (Grouped by Article Type) ────────── */
@@ -931,24 +978,7 @@ html, body {
   align-items: center;
   justify-content: center;
   border-right: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.ov-cover {
-  width: 190px;
-  height: 270px;
-  border-radius: 4px 10px 10px 4px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.5rem 1rem;
-  text-align: center;
-  box-shadow: 
-    -5px 0 10px rgba(0,0,0,0.5),
-    12px 20px 40px rgba(0,0,0,0.7),
-    inset 4px 0 8px rgba(255,255,255,0.2);
-  border: 1px solid rgba(223, 186, 115, 0.35);
-  position: relative;
+  perspective: 1200px;
 }
 
 .ov-right {
@@ -1168,5 +1198,14 @@ html, body {
   .read-pdf-btn {
     width: 100%;
     justify-content: center;
+  }
+  .volume-cover-art,
+  .ov-cover {
+    width: 175px;
+    height: 248px;
+  }
+  .cover-volume-ribbon {
+    font-size: 0.65rem;
+    padding: 4px 8px 7px;
   }
 }

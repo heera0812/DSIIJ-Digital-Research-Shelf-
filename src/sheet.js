@@ -173,7 +173,7 @@ export async function fetchSheetData(config) {
       publicationDate: pubDate,
       subheading: (row[jCols.subheading] || "").trim(),
       description: (row[jCols.description] || "Research and scholarly publications from Dev Sanskriti Vishwavidyalaya").trim(),
-      coverImage: (row[jCols.coverimage] || "").trim(),
+      coverImage: (row[jCols.coverimage] || "").trim() || (typeof CONFIG !== "undefined" && CONFIG.defaultCover ? CONFIG.defaultCover : "/cover.png"),
       buttonText: (row[jCols.buttontext] || "Explore Volume").trim(),
       buttonLink: `/volume/${slug}`,
       category: (row[jCols.category] || year).trim(),

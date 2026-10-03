@@ -405,9 +405,15 @@ function renderVolumePage(slug) {
   `;
 
   // Cover card inside hero
-  volCoverArt.style.background = journal.coverColour || "#102a43";
-  coverVolTitle.textContent = journal.volume;
-  coverYear.textContent = journal.year || "DSVV";
+  const heroCoverImg = $("#hero-cover-img");
+  const coverVolumeRibbon = $("#cover-volume-ribbon");
+  if (heroCoverImg) {
+    heroCoverImg.src = journal.coverImage || "/cover.png";
+    heroCoverImg.alt = `${journal.volume} Cover — Dev Sanskriti Interdisciplinary International Journal`;
+  }
+  if (coverVolumeRibbon) {
+    coverVolumeRibbon.textContent = journal.volume;
+  }
 
   articlesBadge.textContent = `${volArticles.length} ${volArticles.length === 1 ? 'Article' : 'Articles'}`;
 
@@ -516,15 +522,18 @@ function openJournalModal(index) {
 }
 
 function renderModalView(journal, index) {
+  const coverSrc = journal.coverImage || "/cover.png";
   openView.innerHTML = `
     <div class="ov-content">
       <button class="ov-close" aria-label="Close preview" id="ov-close-btn">&times;</button>
       <div class="ov-left">
-        <div class="ov-cover" style="background:${journal.coverColour}; color:${journal.textColour};">
-          <div class="cover-gold-border"></div>
-          <span class="cover-dsvv-insignia">DSVV</span>
-          <span class="cover-vol-title">${journal.volume}</span>
-          <span class="cover-year">${journal.year || "2026"}</span>
+        <div class="volume-cover-wrapper">
+          <div class="ov-cover" role="img" aria-label="${journal.volume} Cover">
+            <img src="${coverSrc}" alt="${journal.volume} Cover" class="book-cover-img" />
+            <div class="book-spine-crease" aria-hidden="true"></div>
+            <div class="book-gloss-overlay" aria-hidden="true"></div>
+            <div class="cover-volume-ribbon">${journal.volume}</div>
+          </div>
         </div>
       </div>
       <div class="ov-right">

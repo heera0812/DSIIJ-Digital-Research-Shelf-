@@ -21,4 +21,5 @@ const CONFIG = Object.freeze({
   subtitle: "Explore Research • Journals • Scholarly Publications",
   background: "#0d1117",
   shelfTone: "#4a2e18",
+  defaultCover: "/cover.png",
 });
